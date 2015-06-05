@@ -1,0 +1,82 @@
+
+<html ng-app="app">
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.js"></script>
+   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+   <script src="javascript.js"></script>
+   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+   <script src="angular-dragdrop.min.js"></script>
+ </head>
+ <body>
+   <div >
+     <h1>Services</h1>
+     <div ng-controller="ListCtrl as list">
+       <p ng-repeat="message in list.messages">{{message.id}}:{{message.text}}</p>
+ </div>
+ <div ng-controller="PostCtrl as post">
+   <form ng-submit="post.addMessage(post.newMessage)">
+     <input type="text" ng-model="post.newMessage">
+     <button type="submit">Add Message</button>
+   </form>
+ </div>
+ </div>
+ <div ng-controller="TabsCtrl">
+   <input type="text" ng-model="firstname"><p ng-bind="firstname"></p>
+   <tabset>
+     <tab heading="Tab 1">Tab 1</tab>
+     <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">{{tab.content}}</tab>
+   </tabset>
+ </div>
+ <br>
+   <tabset vertical="true" type="pills">
+<tab heading="Vertical 1">Vertical content 1</tab>
+<tab heading="Vertical 2">Vertical content 2</tab>
+</tabset>
+<br>
+ <welcomee></welcomee>
+ <br>
+ <div welcomea goodbyea></div>
+ <br>
+ <div class="welcomec"></div>
+ <br>
+ <!-- directive: welcomem -->
+ <div ng-controller="oneCtrl">
+       <div class='contentWrapper ng-cloak inline'>
+         <div class="row fluid">
+                 <div class="col-md-4 dragdimen thumbnail" data-drop="true" ng-model='list5' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list5])'}"  jqyoui-droppable="{multiple:true}">
+                   <div class="caption">
+                     <div class="btn btn-info btn-draggable" ng-repeat="item in list5" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list5" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                   </div>
+                 </div>
+                 <div style="margin-left:400px;">
+
+                       <div class="col-md-4 dragdimen thumbnail" data-drop="true" ng-model='list2' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list2])'}"  jqyoui-droppable="{multiple:true}">
+                         <div class="caption">
+                           <div class="btn btn-info btn-draggable" ng-repeat="item in list2" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list2" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                         </div>
+                       </div>
+                       <div style="margin-left:400px;">
+                 <div class="col-md-4 dragdimen thumbnail" data-drop="true" ng-model='list3' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=list3])'}"  jqyoui-droppable="{multiple:true}">
+                   <div class="caption">
+                     <div class="btn btn-info btn-draggable" ng-repeat="item in list3" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list3" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}</div>
+                 </div>
+               </div>
+               </div>
+           <div class="col-md-6">
+             <label>Facts</label><input type="text" readonly="true">
+           </div>
+         </div>
+         </div>
+       </div>
+     </div>
+ </body>
+ </html>
+ <style>
+ .dragdimen {
+   width:300px;
+   height:200px;
+ }
+ </style>
