@@ -139,8 +139,21 @@ test.controller('testCtrl',function($scope){
   });
 
   test.controller('ModalDemoCtrl', function ($scope, $modal, $log) {
-  $scope.items = ['item1', 'item2', 'item3'];
-
+          $scope.result = [];
+          $scope.firstnamelabel = "First Name";
+          $scope.firstname;
+          $scope.lastnamelabel = "Last Name";
+          $scope.lastname;
+          $scope.submit = function(){
+                  if ($scope.firstname){
+                          $scope.result.push(this.firstnamelabel + "':'" + this.firstname);
+                          $scope.firstname = '';
+                  }
+                  if ($scope.lastname){
+                         $scope.result.push(this.lastnamelabel +"':'" + this.lastname);
+                          $scope.lastname = '';
+                  }
+          };
   $scope.animationsEnabled = true;
 
   $scope.open = function (size) {
@@ -151,19 +164,12 @@ test.controller('testCtrl',function($scope){
       controller: 'ModalInstanceCtrl',
       size: size,
       resolve: {
-        items: function () {
-          return $scope.items;
-        }
-      }
+        result: function () {
+          return $scope.result;
+  }
+    }
     });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-  };
-
+};
   $scope.toggleAnimation = function () {
     $scope.animationsEnabled = !$scope.animationsEnabled;
   };
@@ -173,18 +179,14 @@ test.controller('testCtrl',function($scope){
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-test.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+test.controller('ModalInstanceCtrl', function ($scope, $modalInstance,result) {
 
-  $scope.items = items;
-  $scope.selected = {
-    item: $scope.items[0]
-  };
-
+        $scope.result = result;
   $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
+    $modalInstance.dismiss();
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $modalInstance.dismiss();
   };
 });
