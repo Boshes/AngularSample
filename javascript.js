@@ -4,6 +4,8 @@ app.controller('TabsCtrl', function($scope){
   $scope.tabs = [ {title: 'Tab 2', content: 'Tab content 2'},
                               {title: 'Tab 3', content: 'Tab content 3'}];
   $scope.firstname;
+  $scope.num
+  $scope.str;
 });
 app.factory('messages',function(){
   var messages = {};
