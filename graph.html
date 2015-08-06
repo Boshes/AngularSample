@@ -8,9 +8,9 @@
    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<script type="text/javascript" src="charts/amcharts/amcharts.js"></script>
-	<script type="text/javascript" src="charts/amcharts/serial.js"></script>
-	<script type="text/javascript" src="charts/amcharts/themes/light.js"></script>
+	<script src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="http://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="http://www.amcharts.com/lib/3/themes/light.js"></script>
 </head>
 <body ng-controller="Graph">
 	<div class="container">
@@ -25,68 +25,108 @@
 	        class="form-control"
 	        step= "any">
 		</div>
+		<button type="button"
+			class="btn btn-default"
+			ng-model="chartType"
+			ng-click="changeChart('bar')">Bar Graph
+		</button>
+		<button type="button"
+			class="btn btn-default"
+			ng-model="chartType"
+			ng-click="changeChart('line')">Line Graph
+		</button>
 	</div>
 	<script type="text/javascript">
 		angular.module('graph', [])
 		.controller('Graph', ['$scope', function($scope){
 			var chartData = generateChartData();
-			$scope.amChartData = {
-	            "type": "serial",
-	            "theme": "light",
-	            "marginRight": 80,
-	            "autoMarginOffset": 20,
-	            "marginTop": 7,
-	            "dataProvider": chartData,
-	            "valueAxes": [{
-	                "axisAlpha": 0.2,
-	                "dashLength": 1,
-	                "position": "left",
-	                "guides":[{
-	                    "dashLength":0,
-	                    "boldLabel":true,
-	                    "inside":true,
-	                    "label":"Value",
-	                    "color":"green",
-	                    "lineColor":"green",
-	                    "lineAlpha":1,
-	                    "above":true,
-	                    "value": $scope.inputValue
-	                }]
-	             }],
-	            "mouseWheelZoomEnabled": true,
-	            "graphs": [{
-	                "id": "g1",
-	                "balloonText": "[[category]]<br/><b><span style='font-size:14px;'>Visits: [[value]]</span></b>",
-	                "bullet": "round",
-	                "bulletBorderAlpha": 1,
-	                "bulletColor": "#FFFFFF",
-	                "hideBulletsCount": 50,
-	                "valueField": "visits",
-	                "useLineColorForBulletBorder": true
-	            },
-	            {
-	                "id": "g2",
-	                "valueField": "inputValue"
-	          	}],
-	            "chartScrollbar": {
-	                "autoGridCount": true,
-	                "graph": "g1",
-	                "scrollbarHeight": 40
-	            },
-	            "chartCursor": {
+			initializeChart(chartData);
 
-	            },
-	            "categoryField": "date",
-	            "categoryAxis": {
-	                "parseDates": true,
-	                "axisColor": "#DADADA",
-	                "dashLength": 1,
-	                "minorGridEnabled": true
-	            },
-	            "export": {
-	                "enabled": true
-            	}
-        	}
+			function initializeChart(chartData){
+				$scope.amChartData = {
+		            "type": "serial",
+		            "theme": "light",
+		            "marginRight": 80,
+		            "autoMarginOffset": 20,
+		            "marginTop": 7,
+		            "dataProvider": chartData,
+		            "valueAxes": [{
+		                "axisAlpha": 0.2,
+		                "dashLength": 1,
+		                "position": "left",
+		                "guides":[{
+		                    "dashLength":0,
+		                    "boldLabel":true,
+		                    "inside":true,
+		                    "label":"Value",
+		                    "color":"green",
+		                    "lineColor":"green",
+		                    "lineAlpha":1,
+		                    "above":true,
+		                    "value": $scope.inputValue
+		                }]
+		             }],
+		            "mouseWheelZoomEnabled": true,
+		            "graphs": [{
+		                "id": "g1",
+		                "balloonText": "[[category]]<br/><b><span style='font-size:14px;'>Visits: [[value]]</span></b>",
+		                "type":"line",
+		                "valueField": "visits"
+		            },
+		            {
+		                "id": "g2",
+		                "valueField": "inputValue"
+		          	}],
+		            "chartScrollbar": {
+		                "autoGridCount": true,
+		                "graph": "g1",
+		                "scrollbarHeight": 40
+		            },
+		            "chartCursor": {
+
+		            },
+		            "categoryField": "date",
+		            "categoryAxis": {
+		                "parseDates": true,
+		                "axisColor": "#DADADA",
+		                "dashLength": 1,
+		                "minorGridEnabled": true
+		            },
+		            "export": {
+		                "enabled": true
+	            	}
+	        	}
+	        	return $scope.amChartData;
+	        };
+
+        	$scope.changeChart = function(type){
+        		if(type=="line"){
+        			console.log("clicked to line graph");
+	        		$scope.chartType="line";
+	        		chartData = generateChartData();
+	        		initializeChart(chartData);
+	        		console.log($scope.amChartData.graphs[0]);
+			        $scope.amChartData.graphs[0].type="line";
+			        $scope.amChartData.graphs[0].bullet="round";
+			        $scope.amChartData.graphs[0].bulletBorderAlpha=1;
+			        $scope.amChartData.graphs[0].bulletBulletColor="#FFFFFF";
+			        $scope.amChartData.graphs[0].hideBulletsCount=50;
+			        $scope.amChartData.graphs[0].useLineColorForBulletBorder=true;
+			        console.log($scope.amChartData.graphs[0]);
+		    	}
+		        else if (type=="bar"){
+		        	console.log("clicked to bar chart");
+		            $scope.chartType="bar";
+		            chartData = generateChartData();
+		            initializeChart(chartData);
+		            console.log($scope.amChartData.graphs[0]);
+		            $scope.amChartData.graphs[0].type="column";
+		            $scope.amChartData.graphs[0].bullet="";
+		            $scope.amChartData.graphs[0].bulletBorderAlpha="";
+		            $scope.amChartData.graphs[0].bulletBulletColor="";
+		            console.log($scope.amChartData.graphs[0]);
+				}
+        	};
 
 			function generateChartData() {
 			    var chartData = [];
